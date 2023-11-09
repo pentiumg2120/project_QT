@@ -67,10 +67,11 @@ class Program(QMainWindow, Ui_mainWindow, database_work):
             return  # выходим если нечего читать
         rx = serial_sensor.readLine()
         rxs = str(rx, 'utf-8').strip()
-        data = rxs.split(',')
-        print(data)
-        if data[0] == "0":
-            self.updateLCD(data[1], data[2])
+        if rxs:
+            data = rxs.split(',')
+            print(data)
+            if data[0] == "0":
+                self.updateLCD(data[1], data[2])
 
 # Обновление данных и прочая обработка
     def updateLCD(self, temp, humi):        # Обновление показателей на экране
@@ -84,8 +85,8 @@ class Program(QMainWindow, Ui_mainWindow, database_work):
         self.update_table_sql()             # Обновление таблицы показателей
         print(current_time, current_day)
 
-    def temp_сelsium(self):                 # Пересчет температуры в градусы Цельсия
-        self.temp_ratio = 0
+    def temp_celsium(self):                 # Пересчет температуры в градусы Цельсия
+        self.temp_ratio = 1
         self.qt_temp_label.setText("Температура (°C)")
 
     def temp_faringate(self):               # Пересчет температуры в градусы Фарингейты
