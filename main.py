@@ -1,28 +1,44 @@
 import sys
 import os
-from PyQt5.QtCore import QIODevice
+
+from PyQt5.QtCore import Qt, QIODevice
+from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView
-from program_interface import Ui_mainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QLabel
 from datetime import datetime
 
-from database_work import database_work     # отдельный файл
+# Отдельные файлы
+from program_interface import Ui_mainWindow
+from dialog_interface import Ui_Dialog
+from database_work import database_work
 
 # Запуск COM порта
 serial_sensor = QSerialPort()
 serial_sensor.setBaudRate(115200)
 
-
-class Program(QMainWindow, Ui_mainWindow, database_work):
+# Класс программы
+class Program(QMainWindow, Ui_mainWindow, Ui_Dialog, database_work):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowIcon(QIcon('utka.ico'))         # задаем иконку основному окну
+
+        self.pic_pixmap = QPixmap('utka.ico')               # загружаем изображение утки
+        self.pic = QDialog(self)                            # создаём диалоговое окно для утки
+        self.pic.setWindowTitle("ВО СЛАВУ УТКЕ!")
+        self.pic.setWindowIcon(QIcon('utka.ico'))           # задаем иконку диалоговому окну
+        self.pic.setGeometry(0, 0, 250, 250)                # задаем размер диалоговому окну
+
+        self.label_pic = QLabel(self.pic)                   # создаем надпись в диалоге
+        self.label_pic.setPixmap(self.pic_pixmap)           # прикрепляем изображение к надписи
+        self.label_pic.setAlignment(Qt.AlignCenter)         # выравниваем картинку
 
         # Подготовка COM порта
         self.serial_list_update()
         serial_sensor.readyRead.connect(self.serial_read)
 
         # Обработка нажатий на кнопки
+        self.duck_button.clicked.connect(self.duck)
         self.serial_sensor_open.clicked.connect(self.serial_open)
         self.serial_sensor_close.clicked.connect(self.serial_close)
         self.serial_sensor_update.clicked.connect(self.serial_list_update)
@@ -39,6 +55,9 @@ class Program(QMainWindow, Ui_mainWindow, database_work):
         self.update_table_sql()             # Обновление таблицы
 
         self.temp_ratio = 1                 # Коэффицент пересчета температуры
+
+    def duck(self):
+        self.pic.exec()
 
     def serial_list_update(self):           # Обновление списка COM портов
         portlist = []

@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Ну допустим проект №1</string>
+   <string>Ну, допустим проект №1</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="gridLayoutWidget">
@@ -120,6 +120,13 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="serial_sensor_open">
+       <property name="text">
+        <string>Открыть</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QPushButton" name="serial_sensor_update">
        <property name="text">
@@ -144,13 +151,6 @@
      </item>
      <item row="1" column="0">
       <widget class="QComboBox" name="serial_sensor"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="serial_sensor_open">
-       <property name="text">
-        <string>Открыть</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>
@@ -188,9 +188,6 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QTableView" name="view_sql"/>
-     </item>
      <item row="0" column="0" colspan="2">
       <widget class="QLabel" name="label_2">
        <property name="font">
@@ -206,7 +203,28 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QTableView" name="view_sql"/>
+     </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="duck_button">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>420</y>
+      <width>291</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Проведать утку</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
