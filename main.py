@@ -9,7 +9,6 @@ from datetime import datetime
 
 # Отдельные файлы
 from program_interface import Ui_mainWindow
-from dialog_interface import Ui_Dialog
 from database_work import database_work
 
 # Запуск COM порта
@@ -17,7 +16,7 @@ serial_sensor = QSerialPort()
 serial_sensor.setBaudRate(115200)
 
 # Класс программы
-class Program(QMainWindow, Ui_mainWindow, Ui_Dialog, database_work):
+class Program(QMainWindow, Ui_mainWindow, database_work):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
