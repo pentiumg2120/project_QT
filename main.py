@@ -1,15 +1,15 @@
-import sys
 import os
+import sys
+from datetime import datetime
 
 from PyQt5.QtCore import Qt, QIODevice
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QLabel
-from datetime import datetime
 
 # Отдельные файлы
-from program_interface import Ui_mainWindow
 from database_work import database_work
+from program_interface import Ui_mainWindow
 
 # Запуск COM порта
 serial_sensor = QSerialPort()
@@ -52,8 +52,7 @@ class Program(QMainWindow, Ui_mainWindow, database_work):
             self.create_sqlfile()
 
         self.update_table_sql()             # Обновление таблицы
-
-        self.temp_ratio = 1                 # Коэффицент пересчета температуры
+        self.settings()             # Получение настроек из БД
 
     def duck(self):
         self.pic.exec()
@@ -106,10 +105,12 @@ class Program(QMainWindow, Ui_mainWindow, database_work):
     def temp_celsium(self):                 # Пересчет температуры в градусы Цельсия
         self.temp_ratio = 1
         self.qt_temp_label.setText("Температура (°C)")
+        self.settings(True, 0)
 
     def temp_faringate(self):               # Пересчет температуры в градусы Фарингейты
         self.temp_ratio = 1.8
         self.qt_temp_label.setText("Температура (F)")
+        self.settings(True, 1)
 
     def closeEvent(self, event):            # Закрытие БД при закрытии приложения (во избежание потери данных)
         self.con.close()
